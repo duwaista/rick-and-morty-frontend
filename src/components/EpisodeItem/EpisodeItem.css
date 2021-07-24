@@ -1,0 +1,27 @@
+.episode-item-container {
+  display: flex;
+  justify-content: flex-start;
+  margin-left: 10px;
+  margin-right: 10px;
+  margin-bottom: 2px;
+}
+.episode-item-number {
+  margin-right: 20px;
+  display: flex;
+  justify-content: space-around;
+}
+.episode-item-name {
+  display: flex;
+  justify-items: flex-start;
+}
+.episode-item-date {
+  display: flex;
+  margin-left: auto;
+  justify-self: flex-end;
+}
+/* Небольшой адаптив */
+@media screen and (max-width: 700px) {
+  .episode-item-date {
+    display: none;
+  }
+}
