@@ -3,7 +3,7 @@
   justify-content: flex-start;
   margin-left: 10px;
   margin-right: 10px;
-  margin-bottom: 2px;
+  margin-bottom: 5px;
 }
 .episode-item-number {
   margin-right: 20px;
@@ -11,6 +11,7 @@
   justify-content: space-around;
 }
 .episode-item-name {
+	cursor: pointer;
   display: flex;
   justify-items: flex-start;
 }
