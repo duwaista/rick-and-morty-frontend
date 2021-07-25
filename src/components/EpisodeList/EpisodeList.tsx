@@ -15,7 +15,6 @@ export default function EpisodeList() {
       .then((response) => {
         setResults(response.data.results);
         setEpisodeInfo(response.data.info);
-        console.log(response.data.info);
       })
       .catch((error) => {
         console.error(error);
