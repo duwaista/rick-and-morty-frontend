@@ -1,43 +1,45 @@
 .episode-list-container {
-	display: flex;
-	justify-self: center;
-	flex-direction: column;
-	width: 70%;
-	margin-left: auto;
-	margin-right: auto;
+  display: flex;
+  justify-self: center;
+  flex-direction: column;
+  width: 70%;
+  margin-left: auto;
+  margin-right: auto;
 }
 .episodes-list-item-titles {
-	display: flex;
-	justify-content: space-around;
-	margin-bottom: 6px;
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 6px;
 }
 .episode-title-number {
-	margin-left: 10px;
-	cursor: pointer;
+  margin-left: 10px;
+  cursor: pointer;
 }
 .episode-title-name {
-	cursor: pointer;
-	margin-left: 20px;
+  cursor: pointer;
+  margin-left: 20px;
 }
 .episode-title-date {
-	cursor: pointer;
-	margin-left: auto;
-	margin-right: 20px;
+  cursor: pointer;
+  margin-left: auto;
+  margin-right: 20px;
 }
 
-.episode-title-number:hover, .episode-title-name:hover, .episode-title-date:hover {
-	color: #6699ff;
+.episode-title-number:hover,
+.episode-title-name:hover,
+.episode-title-date:hover {
+  color: #6699ff;
 }
 
 /* Небольшой адаптив */
 @media screen and (max-width: 700px) {
-	.episode-list-container {
-		width: 100%;
-	}
-	.episode-title-date {
-		display: none;
-	}
-	.episodes-list-item-titles {
-		justify-content: flex-start;
-	}
+  .episode-list-container {
+    width: 100%;
+  }
+  .episode-title-date {
+    display: none;
+  }
+  .episodes-list-item-titles {
+    justify-content: flex-start;
+  }
 }

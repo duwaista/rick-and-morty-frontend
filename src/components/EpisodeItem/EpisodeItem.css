@@ -11,7 +11,7 @@
   justify-content: space-around;
 }
 .episode-item-name {
-	cursor: pointer;
+  cursor: pointer;
   display: flex;
   justify-items: flex-start;
 }
