@@ -5,40 +5,91 @@
   flex-direction: row;
 }
 .episode-info-poster {
-	display: flex;
-	align-items: flex-start;
   width: 250px;
   margin-top: 30px;
-  margin-left: 15%;
+  margin-left: 10%;
 }
 .episode-info-content {
-	display: flex;
-	flex-direction: column;
+  display: flex;
+  flex-direction: column;
   margin-left: 40px;
   margin-top: 34px;
 }
 .episode-info-name {
   font-size: 28px;
+  text-decoration: none;
+	color: black;
 }
-.episode-info-iten {
-	margin-top: 6px;
-	font-size: 18px;
+.episode-info-characters {
+  font-size: 28px;
+  margin-left: 10%;
 }
+.episode-info-date {
+  margin-top: 10px;
+  font-size: 20px;
+}
+.episode-info-item {
+  margin-top: 10px;
+  margin-left: 2px;
+  margin-right: 2px;
+  font-size: 16px;
+  display: flex;
+  cursor: pointer;
+  max-width: 160px;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 10px;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.5);
+}
+.episode-info-item:hover {
+  box-shadow: 0 0 8px rgba(0, 0, 0, 1);
+}
+.episode-characters-container {
+  display: grid;
+  grid-template-columns: auto auto auto auto;
+  justify-content: space-around;
+  width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+}
+.episode-character-image {
+  width: 100%;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+.episode-character-name {
+  display: flex;
+  justify-content: center;
+  font-size: 17px;
+  margin: auto;
+}
+
 @media screen and (max-width: 500px) {
   .episode-info-container {
     flex-direction: column;
   }
   .episode-info-poster {
-    width: 80%;
+    width: 90%;
     margin-left: auto;
     margin-right: auto;
-		margin-top: 20px;
-		border-radius: 4px;
+    margin-top: 20px;
+    border-radius: 4px;
   }
-	.episode-info-content {
-		width: 85%;
-		margin-top: 20px;
-		margin-left: auto;
-		margin-right: auto;
-	}
+  .episode-info-content {
+    width: 85%;
+    margin-top: 10px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .episode-info-item {
+    max-width: 100px;
+  }
+  .episode-info-characters {
+    margin-top: 20px;
+    font-size: 22px;
+    margin-left: 25px;
+  }
+  .episode-characters-container {
+    grid-template-columns: auto auto auto;
+  }
 }

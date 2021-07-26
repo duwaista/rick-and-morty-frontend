@@ -3,9 +3,12 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import EpisodeList from "./components/EpisodeList/EpisodeList";
 import "./assets/styles/main.css";
 
-import EpisodePage from "./components/EpisodePage/EpisodePage";
-
-// const EpisodePage = React.lazy(() => import("./components/EpisodePage/EpisodePage"));
+const EpisodePage = React.lazy(
+  () => import("./components/EpisodePage/EpisodePage")
+);
+const CharacterPage = React.lazy(
+  () => import("./components/CharacterPage/CharacterPage")
+);
 
 function App(): JSX.Element {
   return (
@@ -17,6 +20,7 @@ function App(): JSX.Element {
         </Route>
         <Suspense fallback="Загрузка...">
           <Route path="/episode/:id" component={EpisodePage} />
+          <Route path="/character/:id" component={CharacterPage} />
         </Suspense>
       </Switch>
     </Router>

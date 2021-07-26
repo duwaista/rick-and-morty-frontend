@@ -7,8 +7,9 @@ import {
 import axios from "axios";
 
 const episodesUrl = "https://rickandmortyapi.com/api/episode/";
+const charactersUrl = "https://rickandmortyapi.com/api/character/";
 
-type OneEpisodePayload = {
+type IdPayloadType = {
   id: string;
 };
 
@@ -27,7 +28,20 @@ interface EpisodeTypes {
 type IEpisodesSlice = {
   episodesList: any[];
   currentEpisode: EpisodeTypes;
-  listOfCharacters: any[];
+};
+
+type ICharacterSlice = {
+  characterInfo: {
+    image: string;
+    name: string;
+    status: string;
+    type: string;
+    gender: string;
+    species: string;
+    location: {
+      name: string;
+    };
+  };
 };
 
 export type CharListType = {
@@ -51,7 +65,7 @@ export const fetchEpisodeList = createAsyncThunk(
 
 export const fetchOneEpisode = createAsyncThunk(
   "fetchOneEpisode",
-  async ({ id }: OneEpisodePayload) => {
+  async ({ id }: IdPayloadType) => {
     try {
       const responce = await axios.get(episodesUrl + id);
       return await responce.data;
@@ -62,13 +76,12 @@ export const fetchOneEpisode = createAsyncThunk(
   }
 );
 
-export const FetchListOfCharacters = createAsyncThunk(
-  "fetchListOfCharacters",
-  async ({ characters }: CharListType) => {
+export const FetchOneCharacter = createAsyncThunk(
+  "fetchOneCharacter",
+  async ({ id }: IdPayloadType) => {
     try {
-      const responces = await axios.all(characters);
-      console.log(responces);
-      return responces;
+      const responce = await axios.get(charactersUrl + id);
+      return responce.data;
     } catch (error) {
       alert(error);
       return null;
@@ -89,7 +102,6 @@ export const EpisodesSlice = createSlice({
       url: "",
       created: "",
     },
-    listOfCharacters: [],
   } as IEpisodesSlice,
   reducers: {
     sortByName: (state) => {
@@ -108,16 +120,36 @@ export const EpisodesSlice = createSlice({
       })
       .addCase(fetchOneEpisode.fulfilled, (state, action) => {
         state.currentEpisode = action.payload;
-      })
-      .addCase(FetchListOfCharacters.fulfilled, (state, action) => {
-        state.listOfCharacters = state.listOfCharacters.concat(action.payload);
-        console.log(action.payload);
       });
+  },
+});
+
+export const CharactersSlice = createSlice({
+  name: "charactersSlice",
+  initialState: {
+    characterInfo: {
+      name: "",
+      image: "",
+      gender: "",
+      species: "",
+      status: "",
+      type: "",
+      location: {
+        name: "",
+      },
+    },
+  } as ICharacterSlice,
+  reducers: {},
+  extraReducers: (builder) => {
+    builder.addCase(FetchOneCharacter.fulfilled, (state, action) => {
+      state.characterInfo = action.payload;
+    });
   },
 });
 
 const reducer = combineReducers({
   episodesSlice: EpisodesSlice.reducer,
+  charactersSlice: CharactersSlice.reducer,
 });
 
 const store = configureStore({
@@ -128,6 +160,7 @@ export default store;
 
 export const actions = {
   EpisodesSlice: EpisodesSlice.actions,
+  CharactersSlice: CharactersSlice.actions,
 };
 
 export type AppState = ReturnType<typeof store.getState>;

@@ -1,0 +1,36 @@
+.character-info-container {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  flex-direction: row;
+}
+.character-image {
+	display: flex;
+  align-items: flex-start;
+  width: 250px;
+  margin-top: 30px;
+	border-radius: 10px;
+  margin-left: 10%;
+}
+.character-info-content {
+	display: flex;
+  flex-direction: column;
+  margin-left: 40px;
+  margin-top: 34px;
+}
+.character-info-name {
+	font-size: 28px;
+}
+.character-info-item {
+	margin-top: 6px;
+}
+@media screen and (max-width: 500px) {
+	.character-info-container {
+		flex-direction: column;
+	}
+	.character-image {
+		width: 300px;
+		margin-left: auto;
+		margin-right: auto;
+	}
+}

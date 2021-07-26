@@ -53,7 +53,7 @@ export default function EpisodeList(): JSX.Element {
         </span>
       </div>
       {useMemo(() => {
-        return results.map((result, index) => (
+        return results.map((result) => (
           <EpisodeItem key={result.id} props={result} />
         ));
       }, [results])}
