@@ -6,9 +6,12 @@
   margin-bottom: 5px;
 }
 .episode-item-number {
-  margin-right: 20px;
+  margin-right: 14px;
   display: flex;
   justify-content: space-around;
+}
+.episode-item-number-fixer {
+	margin-left: -8px;
 }
 .episode-item-name {
   cursor: pointer;

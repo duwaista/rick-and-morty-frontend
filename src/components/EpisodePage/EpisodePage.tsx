@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
-import { AppState, fetchOneEpisode } from "../../store/store";
+import { AppState, FetchOneEpisode } from "../../store/store";
 import "./EpisodePage.css";
 
 type IdType = {
@@ -18,10 +18,10 @@ export default function EpisodePage(): JSX.Element {
   const [results, setResults] = useState([]);
 
   useEffect(() => {
-    dispatch(fetchOneEpisode({ id }));
+    dispatch(FetchOneEpisode({ id }));
   }, [dispatch, id]);
 
-  // Запрашиваем информацию об всех персонажах эпихода
+  // Запрашиваем информацию о персонажах эпизода (так делать не надо, для этого есть стор)
   useEffect(() => {
     const requests = episode.characters.map((url) => axios.get(url));
     Promise.all(requests).then((response) => setResults(response));

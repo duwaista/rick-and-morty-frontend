@@ -8,9 +8,18 @@ import axios from "axios";
 
 const episodesUrl = "https://rickandmortyapi.com/api/episode/";
 const charactersUrl = "https://rickandmortyapi.com/api/character/";
+const episodeSearchQuery = "https://rickandmortyapi.com/api/episode/?name=";
 
 type IdPayloadType = {
   id: string;
+};
+
+type UrlFetchPayload = {
+  url: string;
+};
+
+type SearchPayloadType = {
+  query: string;
 };
 
 interface EpisodeTypes {
@@ -25,9 +34,18 @@ interface EpisodeTypes {
   created: string;
 }
 
+type EpisodeInfoTypes = {
+  count: number;
+  pages: number;
+  next: string;
+  prev: string | null;
+};
+
 type IEpisodesSlice = {
   episodesList: any[];
+  searchQueryResults: any[];
   currentEpisode: EpisodeTypes;
+  episodesInfo: EpisodeInfoTypes;
 };
 
 type ICharacterSlice = {
@@ -44,17 +62,13 @@ type ICharacterSlice = {
   };
 };
 
-export type CharListType = {
-  characters: any[];
-};
-
-// Берём данные с сервера
-export const fetchEpisodeList = createAsyncThunk(
+// Берём список серий с сервера
+export const FetchEpisodeList = createAsyncThunk(
   "fetchEpisodeList",
   async () => {
     try {
       const responce = await axios.get(episodesUrl);
-      return await responce.data.results;
+      return await responce.data;
     } catch (error) {
       // "Обработка" ошибок
       alert(error);
@@ -63,7 +77,20 @@ export const fetchEpisodeList = createAsyncThunk(
   }
 );
 
-export const fetchOneEpisode = createAsyncThunk(
+export const FetchSearchQuery = createAsyncThunk(
+  "fetchSearchQuery",
+  async ({ query }: SearchPayloadType) => {
+    try {
+      const responce = await axios.get(episodeSearchQuery + query);
+      return responce.data;
+    } catch (error) {
+      return null;
+    }
+  }
+);
+
+// Берём информацию о серии с сервера
+export const FetchOneEpisode = createAsyncThunk(
   "fetchOneEpisode",
   async ({ id }: IdPayloadType) => {
     try {
@@ -76,6 +103,20 @@ export const fetchOneEpisode = createAsyncThunk(
   }
 );
 
+export const FetchNextPage = createAsyncThunk(
+  "fetchNextPage",
+  async ({ url }: UrlFetchPayload) => {
+    try {
+      const responce = await axios.get(url);
+      return responce.data;
+    } catch (error) {
+      alert(error);
+      return null;
+    }
+  }
+);
+
+// Берём информацию о персонаже с сервера
 export const FetchOneCharacter = createAsyncThunk(
   "fetchOneCharacter",
   async ({ id }: IdPayloadType) => {
@@ -89,10 +130,18 @@ export const FetchOneCharacter = createAsyncThunk(
   }
 );
 
+// Можно вынести в отдельный файл
 export const EpisodesSlice = createSlice({
   name: "episodesSlice",
   initialState: {
     episodesList: [],
+    searchQueryResults: [],
+    episodesInfo: {
+      count: 0,
+      pages: 0,
+      next: "",
+      prev: null,
+    },
     currentEpisode: {
       id: 0,
       name: "",
@@ -105,25 +154,45 @@ export const EpisodesSlice = createSlice({
   } as IEpisodesSlice,
   reducers: {
     sortByName: (state) => {
-      // Сортировка списка по имени
+      // Сортировка списка серий по имени
+      // Никакой иммутабельности(
       state.episodesList.sort((a, b) => a.name.localeCompare(b.name));
     },
     sortByDate: (state) => {
-      // Сортировка списка по дате
+      // Сортировка списка серий по дате (id)
+      // Никакой иммутабельности(
       state.episodesList.sort((a, b) => a.id - b.id);
     },
   },
   extraReducers: (builder) => {
     builder
-      .addCase(fetchEpisodeList.fulfilled, (state, action) => {
-        state.episodesList = [...action.payload];
+      .addCase(FetchEpisodeList.fulfilled, (state, action) => {
+        state.episodesList = [...action.payload.results];
+        state.episodesInfo = action.payload.info;
       })
-      .addCase(fetchOneEpisode.fulfilled, (state, action) => {
+      .addCase(FetchOneEpisode.fulfilled, (state, action) => {
         state.currentEpisode = action.payload;
+      })
+      .addCase(FetchNextPage.fulfilled, (state, action) => {
+        state.episodesList = [
+          ...state.episodesList.concat(action.payload.results),
+        ];
+        state.episodesInfo = action.payload.info;
+      })
+      .addCase(FetchSearchQuery.fulfilled, (state, action) => {
+        if (action.payload) {
+          state.searchQueryResults = [...action.payload.results];
+          console.log(action.payload);
+        } else {
+          const noResults = { name: "Ничего не найдено" };
+          state.searchQueryResults = [...[noResults]];
+          console.log(action.payload);
+        }
       });
   },
 });
 
+// Можно вынести в отдельный файл
 export const CharactersSlice = createSlice({
   name: "charactersSlice",
   initialState: {
