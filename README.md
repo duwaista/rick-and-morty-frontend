@@ -1,3 +1,11 @@
 # rick-and-morty-frontend
 
-Frontend test
+Установка зависисимостей:
+### `npm install`
+
+Запуск проекта:
+### `npm start`
+
+Проверка ESlint:
+### `npm run lint`
+
