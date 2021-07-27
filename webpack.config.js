@@ -4,7 +4,7 @@ const HtmlWebPackPlugin = require("html-webpack-plugin");
 module.exports = {
   output: {
     path: path.resolve(__dirname, "dist"),
-    filename: "bundle.js",
+    filename: "[name].[chunkhash].bundle.js",
     publicPath: "/",
   },
   resolve: {
@@ -45,4 +45,23 @@ module.exports = {
       template: "./src/index.html",
     }),
   ],
+  optimization: {
+    splitChunks: {
+      cacheGroups: {
+        vendors: {
+          test: /node_modules\/(?!antd\/).*/,
+          name: "vendors",
+          chunks: "all",
+        },
+        antd: {
+          test: /node_modules\/(antd\/).*/,
+          name: "antd",
+          chunks: "all",
+        },
+      },
+    },
+    runtimeChunk: {
+      name: "manifest",
+    },
+  },
 };
